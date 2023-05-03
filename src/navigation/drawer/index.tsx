@@ -1,2 +1,0 @@
-export { DrawerNavigation } from "./DrawerNavigation";
-

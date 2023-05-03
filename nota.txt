@@ -1,0 +1,153 @@
+Para ocultar una sección en una app Expo al hacer scroll estilo Twitter, se pueden seguir los siguientes pasos:
+
+Primero, se debe detectar la dirección del desplazamiento. Para esto, se puede almacenar la última posición del desplazamiento en una variable y comprobar si la nueva posición es mayor o menor que la anterior. Según el resultado de esa condición, se aplicará la clase correspondiente al elemento que se desea ocultar.
+
+Luego, se pueden usar dos clases auxiliares para lograr la funcionalidad de ocultar y mostrar el elemento con una animación de "deslizamiento hacia fuera" y "deslizamiento hacia dentro". Estas clases serían "scroll-up" y "scroll-down".
+
+Para ocultar la barra de desplazamiento, se puede aplicar el siguiente estilo CSS:
+
+::-webkit-scrollbar {
+    display: none;
+}
+Esto ocultará todas las barras de desplazamiento, pero luego se puede aplicar ese estilo a tan solo un elemento con una id o una clase.
+
+Dado que la app utiliza Expo React Native, se puede utilizar el componente ScrollView de Expo para crear la vista desplazable. Este componente tiene una propiedad llamada onScroll que se puede utilizar para detectar el desplazamiento y llamar a una función que se encargue de ocultar la sección.
+
+A continuación se muestra un ejemplo de cómo se puede implementar esta funcionalidad:
+
+import React, { useState } from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
+
+export default function App() {
+  const [scrollDirection, setScrollDirection] = useState('down');
+  const [lastPosition, setLastPosition] = useState(0);
+
+  const handleScroll = event => {
+    const currentPosition = event.nativeEvent.contentOffset.y;
+
+    if (currentPosition > lastPosition) {
+      setScrollDirection('down');
+    } else {
+      setScrollDirection('up');
+    }
+
+    setLastPosition(currentPosition);
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+      >
+        {/* Aquí van los componentes que se desean mostrar */}
+      </ScrollView>
+      <View style={[
+        styles.bottomBar,
+        scrollDirection === 'down' ? styles.scrollDown : styles.scrollUp
+      ]}>
+        {/* Aquí van los componentes que se desean ocultar */}
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  bottomBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 50,
+    backgroundColor: '#eee',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    zIndex: 10,
+    transitionProperty: 'transform',
+    transitionDuration: '0.3s',
+    transitionTimingFunction: 'ease-out',
+  },
+  scrollUp: {
+    transform: [{ translateY: 50 }],
+  },
+  scrollDown: {
+    transform: [{ translateY: 0 }],
+  },
+});
+En este ejemplo, se utiliza el componente ScrollView de Expo para crear una vista desplazable. Se utiliza el estado para almacenar la última posición del desplazamiento y la dirección del desplazamiento. Se define la función handleScroll que se llama cada vez que se produce un desplazamiento. En esta función, se compara la posición actual del desplazamiento con la posición anterior para determinar la dirección del desplazamiento. Luego se actualiza el estado con la dirección y la posición actual.
+
+Se utiliza el componente View para crear la barra inferior que se desea ocultar. Se aplican las clases auxiliares para lograr la animación de "deslizamiento hacia fuera" y "deslizamiento hacia dentro". Se utiliza la propiedad style para aplicar la clase correspondiente según la dirección del desplazamiento.
+
+En conclusión, para ocultar una sección en una app Expo al hacer scroll estilo Twitter, se pueden utilizar las clases auxiliares para lograr la funcionalidad de ocultar y mostrar el elemento con una animación de "deslizamiento hacia fuera" y "deslizamiento hacia dentro". Se puede utilizar el componente ScrollView de Expo para crear la vista desplazable y la propiedad onScroll para detectar el desplazamiento y llamar a una función que se encargue de ocultar la sección.
+
+
+import React, { useState } from 'react';
+import { TextInput, View, Animated } from 'react-native';
+import { Color } from '../../styles/Color';
+
+interface Props {
+    onChangeText: (text: string) => void;
+    label: string;
+}
+
+const OutlinedTextInput = ({onChangeText, label}: Props) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [labelPosition] = useState(new Animated.Value(10));
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    Animated.timing(labelPosition, {
+      toValue: -10,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    Animated.timing(labelPosition, {
+      toValue: 10,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  return (
+    <View style={{ 
+      borderWidth: 1, 
+      borderRadius: 10, 
+      padding: 10, 
+      borderColor: isFocused ? Color.blueLight : Color.blueLight, 
+      width:'100%' 
+    }}>
+      <Animated.Text style={{ 
+        position: 'absolute', 
+        left: 15, 
+        top: labelPosition, 
+        backgroundColor: '#0B2440', 
+        paddingHorizontal: 5,
+        color: isFocused ? Color.white : Color.blueLight 
+      }}>
+        {label}
+      </Animated.Text>
+      <TextInput
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        style={{ fontSize: 16 }}
+        onChangeText={onChangeText}
+      />
+    </View>
+  );
+};
+
+export default OutlinedTextInput;

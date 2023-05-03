@@ -1,0 +1,126 @@
+// Customer information
+{
+  "id": 1,
+  "name": "John Doe",
+  "type": "Diamante", 
+  "discount": 0.5
+},
+{
+  "id": 2,
+  "name": "Amanda Doe",
+  "type": "Platino", 
+  "discount": 1.0
+},
+{
+  "id": 3,
+  "name": "Eduardo Doe",
+  "type": "Oro", 
+  "discount": 0.1
+},
+{
+  "id": 4,
+  "name": "Ursula Doe",
+  "type": "Partner", 
+  "discount": 0.8
+}
+// Container information
+{
+  "id": 10,
+  "arrival_warehouse": "2023-03-11",
+  "status": "green",
+  "items": [
+    {
+      "item_id": 1,
+      "qty": 500
+    },
+    {
+      "item_id": 2,
+      "qty": 1000
+    }
+  ]
+},
+{
+  "id": 15,
+  "arrival_warehouse": "2023-03-09",
+  "status": "white",
+  "items": [
+    {
+      "item_id": 500,
+      "qty": 750
+    }
+  ]
+},
+{
+  "id": 19,
+  "arrival_warehouse": "2023-07-11",
+  "status": "red",
+  "items": [
+    {
+      "item_id": 1,
+      "qty": 500
+    },
+    {
+      "item_id": 2,
+      "qty": 1000
+    },
+    {
+      "item_id": 1000,
+      "qty": 5450
+    }
+  ]
+},
+//Item information
+{
+  "id": 1,
+  "name": "BB-ADI. (2) BLANCO/NEGRO",
+  "family": "BB-ADI",
+  "color": "(2) BLANCO/NEGRO",
+  "type": "Gorra Beisbolera",
+  "size": "Adulto (57cm)",
+  "price_vip": 20.00,
+  "price_esp": 22.00,
+  "price_container": 19.50,
+},
+{
+  "id": 2,
+  "name": "XF-ORG-53. (3) AMARILLO/MARINO/ROJO",
+  "family": "XF-ORG-53",
+  "color": "(3) BLANCO/MARINO/ROJO",
+  "type": "Gorra Cerrada",
+  "size": "size",
+  "price_vip": 20.00,
+  "price_esp": 22.00,
+  "price_container": 19.50,
+},
+{
+  "id": 500,
+  "name": "SN-ESP. DISEÑO",
+  "family": "SN-ESP",
+  "color": "BLANCO",
+  "type": "Gorra Plana",
+  "size": "Adulto (57cm)",
+  "price_vip": 20.00,
+  "price_esp": 22.00,
+  "price_container": 19.50,
+},
+{
+  "id": 1000,
+  "name": "VS-ADI. (2) BLANCO/NEGRO",
+  "family": "VS-ADI",
+  "color": "(2) BLANCO/NEGRO",
+  "type": "Visera",
+  "size": "Adulto (57cm)",
+  "price_vip": 20.00,
+  "price_esp": 22.00,
+  "price_container": 19.50,
+},
+
+//username
+//email
+//address
+//city
+//country
+//discount
+//enterprise
+//phone
+//type

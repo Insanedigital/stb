@@ -1,26 +1,25 @@
 import 'react-native-gesture-handler'
+import { View } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationApp, } from './src/navigation';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { DrawerNavigation } from './src/navigation/drawer';
-import { AuthStackNavigation } from './src/navigation/stacks/AuthStackNavigation';
 
-export const isSignedIn = true
+import { MenuProvider } from "react-native-popup-menu";
+
+
 
 
 export default function App() {
+
+
   return (
-    <NavigationContainer>
-      <SafeAreaProvider>
-        {
-          isSignedIn? (
-            <DrawerNavigation />
-          ):(
-            <AuthStackNavigation />
-          )
-        }
-      </SafeAreaProvider>
-    </NavigationContainer>
+    <SafeAreaProvider>
+
+        <MenuProvider>
+          <NavigationApp />
+        </MenuProvider>
+
+    </SafeAreaProvider>
   );
 }
 
