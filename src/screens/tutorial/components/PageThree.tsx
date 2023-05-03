@@ -1,12 +1,30 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useCallback, useEffect } from 'react'
-import { GradientLayout } from '../../../components/layout/GradientLayou'
 import { useFonts } from 'expo-font';
+import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import { Color } from '../../../styles/Color';
 import { ButtomGradient } from '../../../components/button/ButtomGradient';
+import { RootStackParamList } from '../../../navigation/stacks/StackNavigation';
+import { GradientLayout } from '../../../components/layout/GradientLayou'
 
-export const PageThree = () => {
+
+type PropsNavigation = NativeStackNavigationProp<RootStackParamList>
+
+
+interface IProps {
+    setPage: () => void;
+    back: () => void;
+}
+
+
+export const PageThree = ({setPage, back}: IProps) => {
+
+    const navigation = useNavigation<PropsNavigation>()
+    
     const [fontsLoaded] = useFonts({
         overpassMedium: require('../../../../assets/fonts/Overpass-Medium.ttf'),
         overpassRegular: require('../../../../assets/fonts/Overpass-Regular.ttf'),
@@ -32,6 +50,12 @@ export const PageThree = () => {
     
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
+         <TouchableOpacity
+            style={styles.backButton} 
+            onPress={() => back()}
+        >
+            <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
         <View style={styles.wrapper_image}>
             <Image 
                 source={require('../../../../assets/welcome/PageThree.png')}
@@ -58,7 +82,7 @@ export const PageThree = () => {
             </Text>
 
             <View style={styles.actions}>
-            <TouchableOpacity style={styles.ghost_button}>
+            <TouchableOpacity style={styles.ghost_button} onPress={()=> navigation.navigate('THome')}>
                 <Text style={[styles.text_button, { color:Color.blueLight, textAlign:'left' }]}>
                    Omitir
                 </Text>
@@ -72,7 +96,7 @@ export const PageThree = () => {
               borderRadius: 25,
               padding: 10,
             }}>
-              <TouchableOpacity>
+              <TouchableOpacity  onPress={() => setPage()}>
                   <Text style={styles.text_button}>
                    Siguiente
                   </Text>
@@ -89,6 +113,12 @@ const styles = StyleSheet.create({
     container: {
         height: '100%',
     },
+    backButton: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        zIndex: 999,
+      },
     wrapper_image:{
         width: '100%',
         height: '50%',

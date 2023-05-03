@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { TabNavigation } from "./tab/TabNavigation";
 import { AuthStackNavigation } from "./stacks/AuthStackNavigation";
+import { StackNavigation } from "./stacks";
 
 
 
@@ -14,7 +15,7 @@ const authenticated= true;
           <NavigationContainer>    
                   {
                     authenticated? (
-                      <TabNavigation /> 
+                      <StackNavigation /> 
                     ):(
                       <AuthStackNavigation />
                     )

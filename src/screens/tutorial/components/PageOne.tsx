@@ -1,12 +1,26 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, NativeSyntheticEvent } from 'react-native'
 import React, { useCallback, useEffect } from 'react'
-import { GradientLayout } from '../../../components/layout/GradientLayou'
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+
+import { GradientLayout } from '../../../components/layout/GradientLayou'
 import { Color } from '../../../styles/Color';
 import { ButtomGradient } from '../../../components/button/ButtomGradient';
+import { RootStackParamList } from '../../../navigation/stacks/StackNavigation';
 
-export const PageOne = () => {
+type PropsNavigation = NativeStackNavigationProp<RootStackParamList>
+
+
+interface IProps {
+    setPage: () => void;
+}
+
+export const PageOne = ({setPage}: IProps) => {
+
+    const navigation = useNavigation<PropsNavigation>()
+
     const [fontsLoaded] = useFonts({
         overpassMedium: require('../../../../assets/fonts/Overpass-Medium.ttf'),
         overpassRegular: require('../../../../assets/fonts/Overpass-Regular.ttf'),
@@ -15,7 +29,7 @@ export const PageOne = () => {
     
     useEffect(() => {
     const prepare = async () => {
-        await SplashScreen.preventAutoHideAsync();
+        await SplashScreen.preventAutoHideAsync(); 
     }
     prepare();
     }, []);
@@ -58,7 +72,7 @@ export const PageOne = () => {
             </Text>
 
             <View style={styles.actions}>
-            <TouchableOpacity style={styles.ghost_button}>
+            <TouchableOpacity style={styles.ghost_button} onPress={()=> navigation.navigate('THome')}>
                 <Text style={[styles.text_button, { color:Color.blueLight, textAlign:'left' }]}>
                    Omitir
                 </Text>
@@ -72,7 +86,7 @@ export const PageOne = () => {
               borderRadius: 25,
               padding: 10,
             }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setPage()}>
                   <Text style={styles.text_button}>
                    Siguiente
                   </Text>

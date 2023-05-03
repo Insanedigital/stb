@@ -11,6 +11,7 @@ import {
 import React, { useCallback, useEffect } from 'react'
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useFonts } from 'expo-font';
@@ -20,7 +21,7 @@ import { GradientLayout } from '../../components/layout/GradientLayou'
 import { Color } from '../../styles/Color'
 import { ButtomGradient } from '../../components/button/ButtomGradient';
 import { Input } from '../../components/Input/Input';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import { AuthStackParamList } from '../../navigation/stacks/AuthStackNavigation';
 
 

@@ -10,9 +10,10 @@ import { NotificationsScreens } from '../../screens/notifications/NotificationsS
 import { Color } from '../../styles/Color';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
+import { HomeScreen } from '../../screens/home/HomeScreen';
 
 export type TabParamList={
-    THome: undefined;
+    Home: undefined;
     Profile: undefined;
     Cart: undefined;
     Records: undefined;
@@ -48,7 +49,7 @@ export const TabNavigation = () => {
 
     
     const icons = {
-        THome: 'home',
+        Home: 'home',
         Profile: 'user',
         Cart: 'shopping-cart',
         Records: 'copy',
@@ -108,7 +109,7 @@ export const TabNavigation = () => {
             
             >
                
-                <Tab.Screen name='THome' component={StackNavigation} options={{title:'Home'}}/>
+                <Tab.Screen name='Home' component={HomeScreen} options={{title:'Home'}}/>
                 <Tab.Screen name='Profile' component={ProfileScreen}  options={{title:'Mi Perfil'}}/>
                 <Tab.Screen name='Cart' component={CartScreen} options={{ tabBarBadge: 3, title: 'Mi Carrito'}} />
                 <Tab.Screen name='Records' component={RecordsScreen} options={{title:'Historial'}}/>

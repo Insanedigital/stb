@@ -3,10 +3,24 @@ import React, { useCallback, useEffect } from 'react'
 import { GradientLayout } from '../../../components/layout/GradientLayou'
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AntDesign } from '@expo/vector-icons';
+
 import { Color } from '../../../styles/Color';
 import { ButtomGradient } from '../../../components/button/ButtomGradient';
+import { RootStackParamList } from '../../../navigation/stacks/StackNavigation';
 
-export const PageFour = () => {
+
+type PropsNavigation = NativeStackNavigationProp<RootStackParamList>
+interface IProps {
+    back: () => void;
+}
+
+export const PageFour = ({back}: IProps) => {
+
+    const navigation = useNavigation<PropsNavigation>()
+
     const [fontsLoaded] = useFonts({
         overpassMedium: require('../../../../assets/fonts/Overpass-Medium.ttf'),
         overpassRegular: require('../../../../assets/fonts/Overpass-Regular.ttf'),
@@ -32,6 +46,12 @@ export const PageFour = () => {
     
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
+          <TouchableOpacity
+            style={styles.backButton} 
+            onPress={() => back()}
+        >
+            <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
         <View style={styles.wrapper_image}>
             <Image 
                 source={require('../../../../assets/welcome/PageFour.png')}
@@ -58,7 +78,7 @@ export const PageFour = () => {
             </Text>
 
             <View style={styles.actions}>
-            <TouchableOpacity style={styles.ghost_button}>
+            <TouchableOpacity style={styles.ghost_button} onPress={()=> navigation.navigate('THome')}>
                 <Text style={[styles.text_button, { color:Color.blueLight, textAlign:'left' }]}>
                    Omitir
                 </Text>
@@ -72,7 +92,7 @@ export const PageFour = () => {
               borderRadius: 25,
               padding: 10,
             }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=> navigation.navigate('THome')}>
                   <Text style={styles.text_button}>
                    Siguiente
                   </Text>
@@ -89,6 +109,12 @@ const styles = StyleSheet.create({
     container: {
         height: '100%',
     },
+    backButton: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        zIndex: 999,
+      },
     wrapper_image:{
         width: '100%',
         height: '50%',
