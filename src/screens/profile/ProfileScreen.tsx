@@ -27,7 +27,7 @@ export const ProfileScreen = () => {
   const [fontsLoaded] = useFonts({
     overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf'),
     overpassRegular: require('../../../assets/fonts/Overpass-Regular.ttf'),
-    overpassLigth: require('../../../assets/fonts/Overpass-Light.ttf'),
+    overpassLight: require('../../../assets/fonts/Overpass-Light.ttf'),
   })
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const ProfileScreen = () => {
 
   return (
     <View 
-    onLayout={onLayoutRootView}
+      onLayout={onLayoutRootView}
       style={[styles.container, {
             paddingTop: insets.top,
             paddingBottom: insets.bottom,
@@ -58,6 +58,7 @@ export const ProfileScreen = () => {
             paddingRight: insets.right,
       }]} 
     >
+      
       <StatusBar style='light'/>
       <Header title='Mi Perfil'/>
      <ScrollView>

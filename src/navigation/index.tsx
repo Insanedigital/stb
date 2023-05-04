@@ -8,13 +8,13 @@ import { StackNavigation } from "./stacks";
 
 export const NavigationApp = () => {
 
-const authenticated= true;
+const authenticated = true;
 
     return (
       <> 
           <NavigationContainer>    
                   {
-                    authenticated? (
+                    true? (
                       <StackNavigation /> 
                     ):(
                       <AuthStackNavigation />

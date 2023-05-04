@@ -71,7 +71,7 @@ export const PageFour = ({back}: IProps) => {
             }}
         >
             <Text style={styles.title}>
-                Reserva tus productos
+                Revisa tu historial de compras
             </Text>
             <Text style={styles.paragraph}>
                 Escoge el contenedor de la cual quieres reservar y dale reservar

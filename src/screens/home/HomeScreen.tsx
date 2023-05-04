@@ -14,7 +14,7 @@ import { styles } from './styles'
 import { StatusBar } from 'expo-status-bar'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
+type Props = NativeStackScreenProps<RootStackParamList, 'THome'>
 
 export const HomeScreen = ({navigation}: Props) => {
   const insets = useSafeAreaInsets();
@@ -85,7 +85,7 @@ export const HomeScreen = ({navigation}: Props) => {
           <ButtonFilter title='Personalizar' source={require('../../../assets/varita-magica.png')} state={buttonCustom} onPress={handleButtonCustom} />
         </View>
         <View style={styles.section_products}>
-          <View style={{width: '100%', alignItems: 'center'}}>
+          
           <Card 
             title='Gorra Cerrada' 
             source={require('../../../assets/01.jpg')}
@@ -123,7 +123,7 @@ export const HomeScreen = ({navigation}: Props) => {
             onPress={() => navigation.navigate('Product', {id: '6', name: 'Gorra Roja'})}
           />
 
-          </View>
+
         </View>
         </ScrollView>
     </View>

@@ -1,45 +1,62 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { LinearGradient  } from 'expo-linear-gradient';
-//import { useFonts } from 'expo-font';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 interface IProps{
     title: string;
 }
 
 export const Header = ({title}: IProps) => {
+  const [fontsLoaded] = useFonts({
+    overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf')
+  })
 
-/*   const [fontsLoaded] = useFonts({
-    'Overpass-Regular': require('../../../assets/fonts/overpass/Overpass-Regular.ttf'),
-  });
+  useEffect(() => {
+    const prepare = async () => {
+      await SplashScreen.preventAutoHideAsync();
+    }
+    prepare();
+  }, []);
 
-if (!fontsLoaded) {
-    return;
-} */
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if(!fontsLoaded){
+    return null
+  }
+
   return (
-    <LinearGradient
+
+     <LinearGradient
         colors={['#044C76', '#06324C', '#101231']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={styles.container}
+        onLayout={onLayoutRootView}
     >
       <Text style={styles.title}>{title}</Text>
     </LinearGradient>
+
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-        borderBottomLeftRadius: 45,
-        borderBottomRightRadius: 45,
+        borderBottomLeftRadius: 55,
+        borderBottomRightRadius: 55,
         width: '100%',
         height: 103,
         justifyContent: 'center',
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         color: '#fff',
         marginLeft: 50,
-        //fontFamily: 'Overpass-Regular',
+        fontFamily: 'overpassMedium',
     }
 })

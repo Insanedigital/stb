@@ -73,93 +73,103 @@ export const ProductScreen = ({navigation, route}: Props) => {
           width: '100%',
           height:'70%',
           borderTopRightRadius: 60,
-          borderTopLeftRadius: 60,
-          paddingHorizontal: 20,
+          borderTopLeftRadius: 60, 
           paddingTop: 18,
         }}
       >
-        <ScrollView style={styles.containerProduct}>
-            <View style={styles.head}>
-              <Text style={styles.title}>{route.params.name}-{route.params.id}</Text>
-              <Text style={styles.code}>Código: 117247916</Text>
-            </View>
-            <View style={styles.description}>
-              <Text style={styles.desc}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing anan elit...
-              </Text>
-              <Text style={styles.size}>
-                Material: Poliéster
-              </Text>
-              <View style={{ flexDirection: 'row' , alignItems: 'center', justifyContent:'space-between'}}>
-                <Text style={styles.size}>Talla: 54</Text>
-                <Text style={styles.containerPrice}>
-                  P. unidad <Text style={styles.price}>$5.00</Text>
+        <View style={styles.containerProduct}>
+              <View style={styles.head}>
+                <Text style={styles.title}>{route.params.name}-{route.params.id}</Text>
+                <Text style={styles.code}>Código: 117247916</Text>
+              </View>
+              <View style={styles.description}>
+                <Text style={styles.desc}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing anan elit...
                 </Text>
-              </View>
-            </View>
-            <View style={styles.section_color}>
-              <Text style={[styles.size, {textAlign: 'left'}]}>Color</Text>
-              <View style={styles.colors}>
-              {
-                colors.map(color => (
-                  <RadioButtons
-                    key={color.id}
-                    selected={selectedColor.includes(color.name)}
-                    color={color.name}
-                    id={color.id}
-                    onPress={()=>onPressRadioButton(color.name)}
-                    value={color.name}
-                    borderColor={color.name}
-                  />
-                ))
-              }
-              
-              </View>
-            </View>
-            <Text style={[
-              styles.desc, {
-                marginTop: 4, 
-                textAlign: 'right',
-            }]}>
-                  1000 disponibles
-            </Text>
-            <View style={styles.count}>
-              <Text style={styles.size}>Cantidad</Text>
-              <NumericInput 
-                initialValue={1}
-                onValueChange={(value) => console.log(value)}
-              />
-            </View>
-            <View style={styles.date_delivery}>
-              <Text style={styles.text_delivery}>
-                Fecha estimada de entrega: 25 ene. 2023
-              </Text>
-            </View>
-            <View style={styles.action_price}>
-              <Text style={{
-                  color:Color.blueLight, 
-                  fontFamily: 'overpassRegular'
-                }}>P. total:  
-                <Text style={styles.text_price}>  $250.00</Text>
-              </Text>
-              <ButtomGradient style={{
-                width: '55%',
-                borderRadius: 50,
-                padding: 10,
-              }}>
-                <TouchableOpacity>
-                  <Text style={{
-                      color: Color.white, 
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                      fontFamily: 'overpassRegular',
-                    }}>
-                      Agregar al carrito
+                <Text style={styles.size}>
+                  Material: Poliéster
+                </Text>
+                <View style={{ flexDirection: 'row' , alignItems: 'center', justifyContent:'space-between'}}>
+                  <Text style={styles.size}>Talla: 54</Text>
+                  <Text style={styles.containerPrice}>
+                    P. unidad {' '}<Text style={styles.price}>$5.00</Text>
                   </Text>
-                </TouchableOpacity>
-              </ButtomGradient>
+                </View>
+              </View>
+              <View style={styles.section_color}>
+                <Text style={[styles.size, {textAlign: 'left'}]}>Color</Text>
+                <View style={styles.colors}>
+                {
+                  colors.map(color => (
+                    <RadioButtons
+                      key={color.id}
+                      selected={selectedColor.includes(color.name)}
+                      color={color.name}
+                      id={color.id}
+                      onPress={()=>onPressRadioButton(color.name)}
+                      value={color.name}
+                      borderColor={color.name}
+                    />
+                  ))
+                }
+                
+                </View>
+              </View>
+              <Text style={[
+                styles.desc, {
+                  marginTop: 4, 
+                  textAlign: 'right',
+                  paddingHorizontal: 20
+              }]}>
+                    1000 disponibles
+              </Text>
+              <View style={styles.count}>
+                <Text style={styles.size}>Cantidad</Text>
+                <NumericInput 
+                  initialValue={1}
+                  onValueChange={(value) => console.log(value)}
+                />
+              </View>
+              <View style={{paddingHorizontal: 20}}>
+                <View style={styles.date_delivery}>
+                  <Text style={styles.text_delivery}>
+                    Fecha estimada de entrega: 25 ene. 2023
+                  </Text>
+                </View>
+              </View>
+            <View style={styles.action_price}>
+              <View style={{
+                  flexDirection: 'row',
+                  justifyContent:'space-between',
+                  alignItems: 'center', 
+                  paddingHorizontal: 13,
+                  height: 85,
+              }}>
+                <Text style={{
+                      color:Color.blueLight, 
+                      fontFamily: 'overpassRegular'
+                    }}>P. total:  
+                    <Text style={styles.text_price}>  $250.00</Text>
+                  </Text>
+                  <ButtomGradient style={{
+                    width: '55%',
+                    borderRadius: 50,
+                    padding: 10,
+                  }}>
+                    <TouchableOpacity>
+                      <Text style={{
+                          color: Color.white, 
+                          textAlign: 'center',
+                          fontWeight: 'bold',
+                          fontFamily: 'overpassRegular',
+                        }}>
+                          Agregar al carrito
+                      </Text>
+                    </TouchableOpacity>
+                  </ButtomGradient>
+              </View>
             </View>
-        </ScrollView>
+        </View>
       </GradientLayout>
 
     </View>
@@ -197,10 +207,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
     color: Color.white,
     fontFamily: 'overpassMedium',
   },
@@ -212,6 +222,7 @@ export const styles = StyleSheet.create({
   },
   description: {
     marginTop: 10,
+    paddingHorizontal: 20,
   },
   desc:{
     fontSize: 14,
@@ -225,10 +236,10 @@ export const styles = StyleSheet.create({
     fontFamily: 'overpassRegular',
   },
   containerPrice:{
-    fontSize: 14,
-    color: Color.whiteLight,
+    fontSize: 12,
+    color: Color.blueLight,
     textAlign: 'right',
-    fontFamily: 'overpassRegular',
+    fontFamily: 'overpassLigth',
   },
   price:{
     fontSize: 18,
@@ -241,6 +252,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 10,
+    paddingHorizontal: 20,
   },
   colors: {
     flexDirection: 'row',
@@ -256,13 +268,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
     gap: 10,
+    paddingHorizontal: 20,
   },
   date_delivery: {
     width: '100%',
     backgroundColor: '#CFDAFF',
     borderRadius: 50,
-    marginVertical: 10,
+    marginTop: 10,
     padding: 5,
+    
   },
   text_delivery:{
     fontSize: 12,
@@ -271,10 +285,11 @@ export const styles = StyleSheet.create({
   },
   action_price: {
     width:'100%',
-    justifyContent:'space-between',
-    alignItems:'center',
-    flexDirection: 'row',
-    marginVertical: 10,
+    justifyContent: 'center',
+    backgroundColor: '#040521',
+    height: 85,
+    position: 'absolute',
+    bottom: -55,
   },
   text_price:{
     fontSize: 15,

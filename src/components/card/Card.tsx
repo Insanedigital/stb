@@ -40,12 +40,14 @@ export const Card = ({title, statusText, stockColor, source, onPress}: Props) =>
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Image 
-        source={source}
-        alt='Imagen del producto'
-        resizeMode='contain'
-        style={styles.image}
-      />
+      <View style={{paddingHorizontal: 5, width: 100}}>
+        <Image 
+          source={source}
+          alt='Imagen del producto'
+          resizeMode='contain'
+          style={styles.image}
+        />
+      </View>
       <View style={styles.content}>
         <TouchableOpacity onPress={onPress}>
           <Text style={styles.title}>{title}</Text>
@@ -69,7 +71,7 @@ export const Card = ({title, statusText, stockColor, source, onPress}: Props) =>
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    maxWidth: 400,
+    maxWidth: 330,
     height: 134,
     backgroundColor: Color.whiteLight,
     borderRadius: 15,
@@ -78,15 +80,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginBottom: 10,
     position: 'relative',
-    gap: 15
+    gap: 10,
   }, 
   image: {
-    width: 112,
-    height: 112,
+    width: 100,
+    height: 100,
+   
   },
   content: {
-    width: '50%',
-    maxWidth: 190,
     maxHeight:134
   },
   title:{
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5,
     top: 18,
-    right: 0,
+    right: -6,
     width: 190,    
   },
   statusText:{

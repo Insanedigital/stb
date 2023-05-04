@@ -96,7 +96,7 @@ export const PageThree = ({setPage, back}: IProps) => {
               borderRadius: 25,
               padding: 10,
             }}>
-              <TouchableOpacity  onPress={() => setPage()}>
+              <TouchableOpacity  onPress={()=> navigation.navigate('THome')}>
                   <Text style={styles.text_button}>
                    Siguiente
                   </Text>
