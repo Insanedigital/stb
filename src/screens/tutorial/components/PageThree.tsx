@@ -82,7 +82,7 @@ export const PageThree = ({setPage, back}: IProps) => {
             </Text>
 
             <View style={styles.actions}>
-            <TouchableOpacity style={styles.ghost_button} onPress={()=> navigation.navigate('THome')}>
+            <TouchableOpacity style={styles.ghost_button} onPress={()=> navigation.navigate('Home')}>
                 <Text style={[styles.text_button, { color:Color.blueLight, textAlign:'left' }]}>
                    Omitir
                 </Text>
@@ -96,7 +96,7 @@ export const PageThree = ({setPage, back}: IProps) => {
               borderRadius: 25,
               padding: 10,
             }}>
-              <TouchableOpacity  onPress={()=> navigation.navigate('THome')}>
+              <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
                   <Text style={styles.text_button}>
                    Siguiente
                   </Text>

@@ -60,7 +60,8 @@ export const ButtonFilter = ({title, source, state, onPress}: Props) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Color.blueDark,
-        width: '22%',
+        width: '23%',
+        maxWidth: 400,
         height: 70,
         borderRadius: 10,
         justifyContent: 'center',

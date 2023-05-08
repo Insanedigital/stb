@@ -48,16 +48,16 @@ export const TutorialScreen = () => {
         onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
       >
         
-        <View style={styles.page} key="0">
+        <View style={styles.page} key="1">
           <PageOne setPage={handleNext}/>
         </View>
-        <View style={styles.page} key="1">
+        <View style={styles.page} key="2">
           <PageTwo setPage={handleNext} back={handlePrev}/>
         </View>
-        <View style={styles.page} key="2">
+        <View style={styles.page} key="3">
           <PageThree setPage={handleNext} back={handlePrev}/>
         </View>
-        <View style={styles.page} key="3">
+        <View style={styles.page} key="4">
           <PageFour back={handlePrev}/>
         </View>
       </PagerView>

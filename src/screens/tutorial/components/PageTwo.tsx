@@ -80,7 +80,7 @@ export const PageTwo = ({setPage, back}:IProps) => {
             </Text>
 
             <View style={styles.actions}>
-            <TouchableOpacity style={styles.ghost_button} onPress={()=> navigation.navigate('THome')}>
+            <TouchableOpacity style={styles.ghost_button} onPress={()=> navigation.navigate('Home')}>
                 <Text style={[styles.text_button, { color:Color.blueLight, textAlign: 'left' }]}>
                    Omitir
                 </Text>

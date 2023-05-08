@@ -157,7 +157,7 @@ export const styles = StyleSheet.create({
   texts:{
       color: Color.white, textAlign:'center',
       fontSize: 12,
-      fontFamily: 'overpassLight',
+      fontFamily: 'overpassLigth',
   },
   separator:{
       marginVertical: 10, 

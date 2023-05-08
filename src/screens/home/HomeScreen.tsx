@@ -14,7 +14,7 @@ import { styles } from './styles'
 import { StatusBar } from 'expo-status-bar'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-type Props = NativeStackScreenProps<RootStackParamList, 'THome'>
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 export const HomeScreen = ({navigation}: Props) => {
   const insets = useSafeAreaInsets();
@@ -87,42 +87,41 @@ export const HomeScreen = ({navigation}: Props) => {
         <View style={styles.section_products}>
           
           <Card 
-            title='Gorra Cerrada' 
+            type='Gorra Cerrada' 
             source={require('../../../assets/01.jpg')}
             statusText='Entrega estimada: 25 ene. 2023'
             onPress={() => navigation.navigate('Product', {id: '1', name: 'Gorra Cerrada'})}
           />
           <Card 
-            title='Gorra Abierta' 
+            type='Gorra Abierta' 
             source={require('../../../assets/02.jpg')}
             statusText='Entrega estimada: 4 abr. 2023'
             onPress={() => navigation.navigate('Product', {id: '2', name: 'Gorra Verde'})}
           />
           <Card 
-            title='Gorra Con Diseño' 
+            type='Gorra Con Diseño' 
             source={require('../../../assets/03.jpg')}
             statusText='Entrega estimada: 24 abr. 2023'
             onPress={() => navigation.navigate('Product', {id: '3', name: 'Sombrero Negro'})}
           />
           <Card 
-            title='Sombrero Negro'  
+            type='Sombrero Negro'  
             source={require('../../../assets/04.jpg')}
             statusText='Entrega estimada: 5 may. 2023'
             onPress={() => navigation.navigate('Product', {id: '4', name: 'Gorra Morada'})}
           />
            <Card 
-            title='Gorra Nike' 
+            type='Gorra Nike' 
             source={require('../../../assets/04.jpg')}
             statusText='Entrega estimada: 5 may. 2023'
             onPress={() => navigation.navigate('Product', {id: '5', name: 'Gorra Abierta'})}
           />
            <Card 
-            title='Gorra Nike' 
+            type='Gorra Nike' 
             source={require('../../../assets/04.jpg')}
             statusText='Entrega estimada: 5 may. 2023'
             onPress={() => navigation.navigate('Product', {id: '6', name: 'Gorra Roja'})}
           />
-
 
         </View>
         </ScrollView>

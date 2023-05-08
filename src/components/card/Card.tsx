@@ -4,15 +4,16 @@ import { Color } from '../../styles/Color'
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-interface Props {
-  title: string;
+export interface CardProps {
+ 
+  type: string;
   statusText: string;
   stockColor?: string;
-  source: ImageSourcePropType;
+  source: ImageSourcePropType
   onPress?: () => void;
 }
 
-export const Card = ({title, statusText, stockColor, source, onPress}: Props) => {
+export const Card = ({type, statusText, source, onPress}: CardProps) => {
     const [fontsLoaded] = useFonts({
       overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf'),
       overpassLigth: require('../../../assets/fonts/Overpass-Light.ttf'),
@@ -43,14 +44,14 @@ export const Card = ({title, statusText, stockColor, source, onPress}: Props) =>
       <View style={{paddingHorizontal: 5, width: 100}}>
         <Image 
           source={source}
-          alt='Imagen del producto'
+          alt={type}
           resizeMode='contain'
           style={styles.image}
         />
       </View>
       <View style={styles.content}>
         <TouchableOpacity onPress={onPress}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>{type}</Text>
           <Text style={styles.paragraph}>Colores</Text>
         </TouchableOpacity>
         <View style={styles.colores}>
@@ -71,7 +72,7 @@ export const Card = ({title, statusText, stockColor, source, onPress}: Props) =>
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    maxWidth: 330,
+    maxWidth: 400,
     height: 134,
     backgroundColor: Color.whiteLight,
     borderRadius: 15,
@@ -83,8 +84,8 @@ const styles = StyleSheet.create({
     gap: 10,
   }, 
   image: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
    
   },
   content: {
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5,
     top: 18,
-    right: -6,
+    right: -20,
     width: 190,    
   },
   statusText:{
@@ -128,3 +129,19 @@ const styles = StyleSheet.create({
     fontFamily: 'overpassLigth',
   }
 })
+
+
+/* qty_expected?: number,
+container_id?: number,
+family?: string,
+color?: string,
+name?: string,
+price_vip?:number,
+price_esp?: number,
+price_container?: number,
+minimum_sales_units?: number,
+container_number?: string,
+arrival_warehouse?: number,
+status?: string,
+size?: string
+item_id?: number; */

@@ -16,7 +16,7 @@ import { TabNavigation } from '../tab/TabNavigation';
 
 export type RootStackParamList = {
     Tutorial: undefined;
-    THome:  undefined;
+    Home:  undefined;
     Product: {id: string, name: string};
     Category: undefined;
     Results: undefined; 
@@ -26,7 +26,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const StackNavigation = () => {
   return (
-        <Stack.Navigator initialRouteName='Tutorial' >
+        <Stack.Navigator initialRouteName='Tutorial' > 
           <Stack.Group screenOptions={{
             headerShown: false,
             statusBarTranslucent: true,
@@ -38,7 +38,7 @@ export const StackNavigation = () => {
             statusBarTranslucent: true,
            
         }}>
-            <Stack.Screen name='THome' component={TabNavigation} options={{ title:'Home'}}/>
+            <Stack.Screen name='Home' component={TabNavigation}/>
             <Stack.Screen name='Product' component={ProductScreen} options={{headerShown: false, presentation:'modal'}}/>
             <Stack.Screen name='Category' component={CategoryScreen} />
             <Stack.Screen name='Results' component={ResultsScreen} />         
