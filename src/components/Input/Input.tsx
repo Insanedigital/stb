@@ -19,6 +19,7 @@ interface InputProps {
   onBlur?: ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void) | undefined;
   marginTop?: number | string | undefined;
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 }
 
 export const Input = ({
@@ -29,6 +30,7 @@ export const Input = ({
   onBlur,
   marginTop, 
   style,
+  disabled
 
 }: InputProps) => {
   const [fontsLoaded] = useFonts({
@@ -58,12 +60,13 @@ export const Input = ({
         <Text style={[styles.label]}>{Label}</Text>
       </View>
       <TextInput
-        style={styles.input}
+        style={[styles.input, disabled && {borderColor: '#687488'}]}
         placeholder={placeholder}
         placeholderTextColor={Color.grayDark}
         onChangeText={onChangeText}
         onBlur={onBlur}
         value={value}
+        editable={!disabled}
       />
   </View>
   )

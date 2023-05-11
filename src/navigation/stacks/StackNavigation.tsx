@@ -17,7 +17,7 @@ import { TabNavigation } from '../tab/TabNavigation';
 export type RootStackParamList = {
     Tutorial: undefined;
     Home:  undefined;
-    Product: {id: string, name: string};
+    Product: {id: string};
     Category: undefined;
     Results: undefined; 
 };

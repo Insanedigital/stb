@@ -16,10 +16,14 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
 
-
-interface IProps {
-    children: JSX.Element | JSX.Element[]
+interface Props {
+    types: string[];
+    selectedType?: string | null;
+    onChange?: (type: string | null) => void;
+    children?: JSX.Element | JSX.Element[]
 } 
+
+
 const category = [
     { id: '1', name: 'Gorra abierta' },
     { id:' 2', name: 'Gorra cerrada' },
@@ -35,7 +39,8 @@ const dates = [
     { id: '4', arrival_warehouse: 'Mayo 2023' },
 ]
 
-export const ButtonSetting = () => {
+export const ButtonSetting = ({ types, selectedType, onChange, children }: Props) => {
+
     const [showCategoryOptions, setShowCategoryOptions] = useState(true);
     const [showDateOptions, setShowDateOptions] = useState(false);
 
@@ -76,7 +81,8 @@ export const ButtonSetting = () => {
 
 
     function onPressRadioButton(name: string) {
-        setSelectedCategory(name); 
+            setSelectedCategory(name); 
+            onChange(name);
     }
 
     function selectDateRaddioButton(date: string) {
@@ -111,19 +117,19 @@ export const ButtonSetting = () => {
                         }
                     </TouchableOpacity>
                 </MenuOption>
-                {showCategoryOptions && category.map(({ id, name }) => (
-                <MenuOption style={styles.option} key={id}>
+                {showCategoryOptions && types?.map((type, i) => (
+                <MenuOption style={styles.option} key={i}>
                     <RadioButton 
-                        key={id}
-                        selected={selectedCategory.includes(name)}
+                        key={i}
+                        selected={selectedCategory.includes(type)}
                         color={'#889FF0'}
-                        id={id}
-                        onPress={()=> onPressRadioButton(name)}
-                        value={name}
+                        id={i.toString()}
+                        onPress={()=> onPressRadioButton(type)}
+                        value={type}
                         size={18}
             
                     />
-                    <Text style={styles.text_item}>{name}</Text>
+                    <Text style={styles.text_item}>{type}</Text>
                 </MenuOption>
                 ))}
                 <View style={{borderBottomWidth: 0.5, borderBottomColor: Color.grayLight}}/>
@@ -209,7 +215,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     text_item:{
-        fontFamily: 'overpassLight',
+        fontFamily: 'overpassLigth',
         fontSize: 12,
     }
 })

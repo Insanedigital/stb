@@ -10,6 +10,7 @@ import { NumericInput } from '../../components/numericInput/NumericInput';
 import { ButtomGradient } from '../../components/button/ButtomGradient';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import DATA from '../../data/products.json';
 
 const colors = [
   { id: '1', name: 'red' },
@@ -19,11 +20,33 @@ const colors = [
   { id: '5', name: 'purple' },
 ];
 
+const GORRA_ABIERTA = 'Gorra abierta ajustable, con visor curvo.'
+const GORRA_CUBANA = 'CU: Gorra cubana ajustable, corte de corona plana y visor curvo.'
+const GORRA_MISISIONERA = 'MIS: Gorra misionera cerrada, ajuste elástico, con visor de protección solar y capa protectora trasera.'
+const SOMBRERO_CERRADO = 'SOM: sombrero cerrado, ajuste elástico, con visor de protección solar y capa protectora trasera.'
+const GORRA_CERRADA = 'GROD: Gorra abierta ajustable, con diseño en distintas aplicaciones: bordados, estampados o placa'
+const VISOR_PLANO = 'SN: Gorra con visor plano.'
+const VISOR_SOLAR = 'VS: Visera solar ajustable, con visor curvo.'
+const SNFX = 'XF: Gorra beisbolera cerrada con ajuste elástico y visor curvo.'
+const GORRA_BEISBOLERA = 'GB: Gorra beisbolera cerrada con ajuste elástico y visor curvo.'
+const VISOR_CURVO = 'VC: Visera solar ajustable, con visor curvo.'
+
+
+
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Product'>
 
 export const ProductScreen = ({navigation, route}: Props) => {
+
+
+
+  const {id} = route.params
+
+  const product = DATA.products.find(item => item.item_id === parseInt(id)) 
+
+
   const [selectedColor, setSelectedColor] = useState('');
+  const [description, setDescription] = useState('');
   
   const [fontsLoaded] = useFonts({
     overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf'),
@@ -37,6 +60,41 @@ export const ProductScreen = ({navigation, route}: Props) => {
     }
     prepare();
   }, []);
+
+  useEffect(() => {
+    getDescription()
+  }, [product?.type])
+
+  
+
+  const getDescription = () => {
+    if(product?.type.toLocaleLowerCase() === 'Gorra Abierta'){
+      setDescription(GORRA_ABIERTA)
+    } else if(product?.type.toLocaleLowerCase() === 'gorra cubana'){
+      setDescription(GORRA_CUBANA)
+    } else if(product?.type.toLocaleLowerCase() === 'gorra misionera'){
+      setDescription(GORRA_MISISIONERA)
+    } else if(product?.type.toLocaleLowerCase() === 'sombrero cerrado'){
+      setDescription(SOMBRERO_CERRADO)
+    } else if(product?.type.toLocaleLowerCase() === 'gorra cerrada'){
+      setDescription(GORRA_CERRADA)
+    } else if(product?.type === 'Gorra Plana'){
+      setDescription(VISOR_PLANO)
+    } else if(product?.type.toLocaleLowerCase() === 'visor solar'){
+      setDescription(VISOR_SOLAR)
+    } else if(product?.type.toLocaleLowerCase() === 'snfx'){
+      setDescription(SNFX)
+    } else if(product?.type === 'Gorra Beisbolera'){
+      setDescription(GORRA_BEISBOLERA)
+    } else if(product?.type.toLocaleLowerCase() === 'visor curvo'){
+      setDescription(VISOR_CURVO)
+    }
+   }
+ 
+
+    
+    
+
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -62,9 +120,9 @@ export const ProductScreen = ({navigation, route}: Props) => {
       </TouchableOpacity>
       <View style={styles.constainerImage}>
         <Image 
-          source={require('../../../assets/05.jpg')}
-          alt='Imagen del producto'
-          resizeMode='cover'
+          source={{uri: product?.images}}
+          alt={product?.name}
+          resizeMode='contain'
           style={styles.image}
         /> 
       </View>
@@ -79,20 +137,20 @@ export const ProductScreen = ({navigation, route}: Props) => {
       >
         <View style={styles.containerProduct}>
               <View style={styles.head}>
-                <Text style={styles.title}>{route.params.name}-{route.params.id}</Text>
+                <Text style={styles.title}>{product?.type}</Text>
                 <Text style={styles.code}>Código: 117247916</Text>
               </View>
               <View style={styles.description}>
                 <Text style={styles.desc}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing anan elit...
+                  {description && description}
                 </Text>
                 <Text style={styles.size}>
                   Material: Poliéster
                 </Text>
                 <View style={{ flexDirection: 'row' , alignItems: 'center', justifyContent:'space-between'}}>
-                  <Text style={styles.size}>Talla: 54</Text>
+                  <Text style={styles.size}>{product?.size}</Text>
                   <Text style={styles.containerPrice}>
-                    P. unidad {' '}<Text style={styles.price}>$5.00</Text>
+                    P. unidad {' '}<Text style={styles.price}>${product?.price_esp}</Text>
                   </Text>
                 </View>
               </View>
@@ -121,19 +179,19 @@ export const ProductScreen = ({navigation, route}: Props) => {
                   textAlign: 'right',
                   paddingHorizontal: 20
               }]}>
-                    1000 disponibles
+                    {product?.qty_expected} disponibles
               </Text>
               <View style={styles.count}>
                 <Text style={styles.size}>Cantidad</Text>
                 <NumericInput 
-                  initialValue={1}
+                  initialValue={product?.minimum_sales_units || 50}
                   onValueChange={(value) => console.log(value)}
                 />
               </View>
               <View style={{paddingHorizontal: 20}}>
                 <View style={styles.date_delivery}>
                   <Text style={styles.text_delivery}>
-                    Fecha estimada de entrega: 25 ene. 2023
+                    Fecha estimada de entrega: {product?.arrival_warehouse}
                   </Text>
                 </View>
               </View>
@@ -193,7 +251,7 @@ export const styles = StyleSheet.create({
     height: '35%',
   },
   image: {
-    width: '75%',
+    width: '60%',
     maxWidth: '100%',
     height: '100%',
     justifyContent: 'center',

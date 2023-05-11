@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useFonts } from 'expo-font';
@@ -16,13 +16,31 @@ import { Input } from '../../components/Input/Input'
 import { Header } from '../../components/header/Header'
 import { Color } from '../../styles/Color'
 import { ButtomGradient } from '../../components/button/ButtomGradient'
+import DATA from '../../data/users.json'
 
 
 
 
 
 export const ProfileScreen = () => {
+
+  const user = DATA.users.find(user => user.id === 1)
+
   const insets = useSafeAreaInsets();
+
+  const [fisrtsName, setFirstName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [phoneAux, setPhoneAux] = useState('')
+  const [address, setAddress] = useState('')
+
+  
+  const [fisrtsNameIsDisabled, setFirstNameIsDisabled] = useState(false)
+  const [emailIsDisabled, setEmailIsDisabled] = useState(false)
+  const [phoneIsDisabled, setPhoneIsDisabled] = useState(false)
+  const [phoneAuxIsDisabled, setPhoneAuxIsDisabled] = useState(false)
+  const [addressIsDisabled, setAddressIsDisabled] = useState(false)
+
   
   const [fontsLoaded] = useFonts({
     overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf'),
@@ -37,6 +55,17 @@ export const ProfileScreen = () => {
     prepare();
   }, []);
 
+  useEffect(() => {
+    if(user){
+      setFirstName(user?.username)
+      setEmail(user?.email)
+      setPhone(user?.phone)
+      setFirstNameIsDisabled(true)
+      setEmailIsDisabled(true)
+      setPhoneIsDisabled(true)
+    }
+  }, [user])
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -46,7 +75,6 @@ export const ProfileScreen = () => {
   if(!fontsLoaded){
     return null
   }
-
 
   return (
     <View 
@@ -80,7 +108,7 @@ export const ProfileScreen = () => {
           </View>
           <View>
             <Text style={styles.text_user}>
-                User 123456789
+                User {user?.id}
             </Text>
             <View style={styles.wrapper_status}>
               <SimpleLineIcons 
@@ -89,22 +117,22 @@ export const ProfileScreen = () => {
                 color='#445078' 
                 style={{backgroundColor: '#CFDAFF', borderRadius: 100, padding: 5}}
               />
-              <Text style={styles.texts_blue}>Diamante</Text>
+              <Text style={styles.texts_blue}>{user?.type}</Text>
             </View>
           </View>
         </View>
         <View style={styles.containerInfo}>
           <View style={styles.icon}>
             <FontAwesome5 name="building" size={24} color={Color.blueLight} />
-            <Text style={styles.texts_blue}>STD Company</Text>
+            <Text style={styles.texts_blue}>{user?.enterprise}</Text>
           </View>
           <View style={styles.icon}>
           <MaterialCommunityIcons name="email-outline" size={24} color={Color.blueLight} />
-            <Text style={styles.texts}>usuario1@gmail.com</Text>
+            <Text style={styles.texts}>{user?.email}</Text>
           </View>
           <View style={styles.icon}>
           <AntDesign name="mobile1" size={24} color={Color.blueLight} />
-            <Text style={styles.texts}>+01 234 567 000</Text>
+            <Text style={styles.texts}>{user?.phone}</Text>
           </View>
           <View style={styles.icon}>
           <AntDesign name="enviromento" size={24} color={Color.blueLight} />
@@ -114,7 +142,10 @@ export const ProfileScreen = () => {
         </View>
         <View style={styles.containerForm}>
           <View style={styles.containerInput}>
-          <TouchableOpacity>
+          <TouchableOpacity 
+            onPress={() => setFirstNameIsDisabled(!fisrtsNameIsDisabled)}
+            style={{zIndex: 1}} 
+          >
             <Entypo name="edit" 
               size={14} 
               color={Color.blueDark}
@@ -124,29 +155,39 @@ export const ProfileScreen = () => {
          
             <Input 
               Label='Nombre' 
-              onChangeText={()=> console.log('first')} 
+              onChangeText={setFirstName} 
               placeholder='Nombre'
+              value={fisrtsName}
               style={styles.input}
+              disabled={fisrtsNameIsDisabled}
             />
           </View>
           <View style={styles.containerInput}>
-          <TouchableOpacity>
+          <TouchableOpacity 
+          onPress={() => setEmailIsDisabled(!emailIsDisabled)}
+          style={{zIndex: 1}} 
+          >
             <Entypo name="edit" 
               size={14} 
               color={Color.blueDark}
-              style={styles.icon_button} 
+              style={styles.icon_button}
             />
           </TouchableOpacity>
           
           <Input 
             Label='E-mail'
-            onChangeText={()=> console.log('first')} 
+            onChangeText={setEmail} 
+            value={email}
             placeholder='E-mail'
             style={styles.input}
+            disabled={emailIsDisabled}
            />
            </View>
            <View style={styles.containerInput}>
-           <TouchableOpacity>
+           <TouchableOpacity 
+           onPress={() => setPhoneIsDisabled(!phoneIsDisabled)}
+           style={{zIndex: 1}} 
+           >
             <Entypo name="edit" 
               size={14} 
               color={Color.blueDark}
@@ -155,13 +196,15 @@ export const ProfileScreen = () => {
           </TouchableOpacity>
           <Input 
             Label='Celular' 
-            onChangeText={()=> console.log('first')} 
+            onChangeText={setPhone} 
+            value={phone}
             placeholder='Numero de Celular'
             style={styles.input}
+            disabled={phoneIsDisabled}
           />
           </View>
           <View style={styles.containerInput}>
-          <TouchableOpacity>
+          <TouchableOpacity style={{zIndex: 1}} >
             <Entypo name="edit" 
               size={14} 
               color={Color.blueDark}
@@ -170,34 +213,55 @@ export const ProfileScreen = () => {
           </TouchableOpacity>
           <Input 
             Label='Opcional' 
-            onChangeText={()=> console.log('first')} 
+            onChangeText={setPhoneAux} 
+            value={phoneAux}
             placeholder='Numero de Celular Opcional'
             style={styles.input}
           />
           </View>
           <View style={styles.containerInput}>
-          <TouchableOpacity>
+          <TouchableOpacity style={{zIndex: 1}} >
             <Entypo name="edit" 
               size={14} 
               color={Color.blueDark}
               style={styles.icon_button} 
             />
-          </TouchableOpacity>
+          </TouchableOpacity >
           <Input 
             Label='Direccion' 
-            onChangeText={()=> console.log('first')} 
+            onChangeText={setAddress}
+            value={address} 
             placeholder='Direccion'
             style={styles.input}
           />
           </View>
         </View>
-       
+       {
+        fisrtsNameIsDisabled || emailIsDisabled || phoneIsDisabled ? (
+          <View style={styles.wrapper_buttom}>
+          <ButtomGradient style={{
+            width: '70%',
+            borderRadius: 50,
+            padding: 10,
+          }}
+          colors={['#687488', '#687488', '#687488']}>
+              <TouchableOpacity>
+                <Text style={[styles.text_buttom, {color: Color.grayLight}]}>
+                  Guardar Cambios
+                </Text>
+              </TouchableOpacity>
+          </ButtomGradient>
+        </View>
+
+        ): (
         <View style={styles.wrapper_buttom}>
           <ButtomGradient style={{
             width: '70%',
             borderRadius: 50,
             padding: 10,
-          }}>
+          }}
+          colors={['#030741', '#044A73', '#00C2FD' ]}
+         >
               <TouchableOpacity>
                 <Text style={styles.text_buttom}>
                   Guardar Cambios
@@ -205,6 +269,9 @@ export const ProfileScreen = () => {
               </TouchableOpacity>
           </ButtomGradient>
         </View>
+
+        )
+       }
         <View style={{width:'100%', marginTop: 40}}>
           <Text style={styles.link}>Cambiar contraseña</Text>
           <Text style={[styles.link, {marginTop: 30}]}>Términos y condiciones</Text>
@@ -313,6 +380,6 @@ export const styles = StyleSheet.create({
     backgroundColor: Color.blueLight,
     borderRadius: 50,
     padding: 3,
-    zIndex: 1
+    zIndex: 999
   }
 })

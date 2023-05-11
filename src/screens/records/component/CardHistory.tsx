@@ -5,9 +5,12 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { Color } from '../../../styles/Color'
+import { Order } from '../RocordsScreen';
 
 
-export const CardHistory = () => {
+
+
+export const CardHistory = ({...order}: Order) => {
 
     const [fontsLoaded] = useFonts({
         overpassMedium: require('../../../../assets/fonts/Overpass-Medium.ttf'),
@@ -35,10 +38,12 @@ export const CardHistory = () => {
         <View style={styles.container} onLayout={onLayoutRootView}>
             <View style={styles.header}>
                 <View>
-                    <Text style={styles.title}>Orden 123456</Text>
+                    <Text style={styles.title}>Orden {order.id}</Text>
                 </View>
-                <View style={styles.wrapper_status}>
-                    <Text style={styles.status_text}>Pagado</Text>
+                <View style={[styles.wrapper_status, order.payment_status == 'paid' ? {backgroundColor: 'green'} : {backgroundColor: 'red'}]}>
+                    <Text style={styles.status_text}>
+                        {order.payment_status}
+                    </Text>
                 </View>
             </View>
             <View style={styles.wrapper_description}>
@@ -50,10 +55,8 @@ export const CardHistory = () => {
                     />
                 </View>
                 <View style={styles.wrapper_items}>
-                    <Text style={styles.title_description}>200 Unidades reservadas</Text>
-                    <Text style={styles.text_items}>{`\u2022`} 50 gorras amarillas tipo pescador</Text>
-                    <Text style={styles.text_items}>{`\u2022`} 100 gorras rojas planas</Text>
-                    <Text style={styles.text_items}>{`\u2022`} 50 gorras rojas con diseño</Text>
+                    <Text style={styles.title_description}>{order.item_qty} Unidades reservadas</Text>
+                    <Text style={styles.text_items}>{`\u2022`} {order.items[0].qty} {order.items[0].item_name}</Text>
                     <TouchableOpacity>
                         <Text 
                             style={styles.text_button}>
@@ -72,7 +75,7 @@ export const CardHistory = () => {
                     <Text style={[styles.text_seller,{
                         color: Color.blueLight, 
                     }]}>
-                        Humberto Chumbiauca
+                        {order.seller_name}
                     </Text>
                     <Text style={[styles.text_seller,{
                         color: Color.white, 
@@ -88,12 +91,12 @@ export const CardHistory = () => {
                 <View style={styles.wrapper_price_total}>
                     <View style={styles.wrapper_booking}>
                         <Text style={styles.text_total}>Precio de reserva{' '}</Text>
-                        <Text style={styles.text_total}>$100.00</Text>
+                        <Text style={styles.text_total}>${order.items[0].price}</Text>
                     </View>
                     <View style={{borderBottomWidth: 0.5, borderBottomColor: Color.blueLight}}/>
                     <View style={styles.wrapper_price}>
                         <Text style={styles.text_total}>Precio Total</Text>
-                        <Text style={styles.text_total}>$500.00</Text>
+                        <Text style={styles.text_total}>${order.amount}</Text>
                     </View>
                 </View>
             </View>
