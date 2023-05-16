@@ -10,5 +10,6 @@ export const Color = {
     gray:'#00000033',
     whiteLight:'#FCFCFC',
     grayLight:'#E8E8E8',
+    bgMain: '#040521',
 } 
 

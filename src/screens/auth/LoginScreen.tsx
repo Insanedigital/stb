@@ -8,7 +8,7 @@ import {
   Text,
   TouchableOpacity, 
   View } from 'react-native'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import Checkbox from 'expo-checkbox';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -23,6 +23,7 @@ import { ButtomGradient } from '../../components/button/ButtomGradient';
 import { Input } from '../../components/Input/Input';
 
 import { AuthStackParamList } from '../../navigation/stacks/AuthStackNavigation';
+import { AuthContext } from '../../store/users/auth/authContext';
 
 
 
@@ -51,6 +52,8 @@ export const LoginScreen = () => {
 
   const {navigate} = useNavigation<Props>()
 
+  const {signIn, loading, isLoggedIn} = useContext(AuthContext)
+
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
     initialValues: {
       email: '',
@@ -59,9 +62,22 @@ export const LoginScreen = () => {
       terms: false,
     },
     validationSchema: LoginSchema,
-    onSubmit: async (values, actions) => { 
-       console.log(values)
-
+    onSubmit: async (values, actions) => {  
+      const {email, password} = values 
+       await signIn(email, password)
+       console.log(isLoggedIn)
+       if(isLoggedIn){
+        actions.resetForm({
+          values: {
+            email: '',
+            password: '',
+            privacy: false,
+            terms: false,
+          }
+        })
+      }
+    }
+  })
        /* await signIn(values.email, values.password);
         if(isLoggedIn){
           actions.resetForm({
@@ -78,9 +94,8 @@ export const LoginScreen = () => {
          Alert.alert('Error', error!, [ { text: 'Ok', onPress: () => null, style: 'cancel' }])
         } */
         
-      } 
+       
 
-  })
   const [fontsLoaded] = useFonts({
     overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf'),
     overpassRegular: require('../../../assets/fonts/Overpass-Regular.ttf'),
@@ -157,6 +172,7 @@ export const LoginScreen = () => {
               <Checkbox 
                 style={styles.checkbox}  
                 value={values.terms}
+                color={Color.blueDark}
                 onValueChange={() => handleCheckboxChangeTerms(values.terms)} 
               />
               <Text style={{color: Color.white, fontSize: 12, fontWeight:'400'}}>
@@ -167,7 +183,8 @@ export const LoginScreen = () => {
             {touched.terms && errors.terms && (<Text style={styles.text_error}>{errors.terms}</Text>)}
             <View style={styles.section_checkbox_2}>
               <Checkbox 
-                style={styles.checkbox} 
+                style={styles.checkbox}
+                color={Color.blueDark} 
                 value={values.privacy}  
                 onValueChange={() => handleCheckboxChangePrivacy(values.privacy)} 
               />
@@ -184,7 +201,7 @@ export const LoginScreen = () => {
             }}>
               <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
                   <Text style={styles.buttonText}>
-                   Ingresar
+                   {loading? <ActivityIndicator size={'small'} color={Color.blueLight}/> : 'Ingresar'}
                   </Text>
               </TouchableOpacity>
             </ButtomGradient>

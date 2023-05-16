@@ -39,7 +39,7 @@ export const TutorialScreen = () => {
       }
     
     ]}>
-      <StatusBar style='auto' />
+      <StatusBar style='dark' />
       <PagerView 
         style={styles.viewPager} 
         initialPage={0} 

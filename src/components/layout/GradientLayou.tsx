@@ -12,7 +12,7 @@ export const GradientLayout = ({children, style}: Iprops) => {
     const insets = useSafeAreaInsets();
   return (
     <LinearGradient
-        colors= { ['#114E77', '#001B44', '#2C0423']}
+        colors= { ['#0A3E56', '#010430']}
         start= { { x: 1.99, y: 0 }}
         end= { { x: 0, y: 1.1 }}
         style={style}

@@ -62,19 +62,22 @@ export const PageFour = ({back}: IProps) => {
         </View>
         <GradientLayout
             style={{
-                width: '100%',
                 height: '50%',
                 borderTopRightRadius: 51,
                 borderTopLeftRadius: 51,
                 paddingHorizontal: 25,
                 paddingTop: 18,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
             }}
         >
+            <View style={styles.contentTutorial}>
             <Text style={styles.title}>
                 Revisa tu historial de compras
             </Text>
             <Text style={styles.paragraph}>
-                Escoge el contenedor de la cual quieres reservar y dale reservar
+                Encontrarás todas tus reservas en un sólo lugar.
             </Text>
 
             <View style={styles.actions}>
@@ -94,11 +97,12 @@ export const PageFour = ({back}: IProps) => {
             }}>
               <TouchableOpacity onPress={()=> navigation.navigate('Home')}>
                   <Text style={styles.text_button}>
-                   Siguiente
+                   Finalizar
                   </Text>
               </TouchableOpacity>
             </ButtomGradient>
 
+            </View>
             </View>
         </GradientLayout>
     </View>
@@ -108,7 +112,12 @@ export const PageFour = ({back}: IProps) => {
 const styles = StyleSheet.create({
     container: {
         height: '100%',
+        backgroundColor: Color.bgMain,
     },
+    contentTutorial:{
+        paddingHorizontal: 20,
+      
+     },
     backButton: {
         position: 'absolute',
         top: 50,
@@ -134,7 +143,7 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     paragraph: {
-        fontSize: 14,
+        fontSize: 18,
         textAlign: 'center',
         color: Color.blueLight,
         fontFamily: 'overpassRegular',

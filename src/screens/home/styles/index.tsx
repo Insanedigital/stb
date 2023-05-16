@@ -24,9 +24,12 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
     }, 
     section_products:{
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      marginBottom: 10,
+      width: '100%', 
+      paddingHorizontal: 10, 
+      alignItems: 'center', 
+      flexDirection: 'row', 
+      flexWrap: 'wrap',
+      gap: 6,
+      marginVertical: 10,
     }
   })

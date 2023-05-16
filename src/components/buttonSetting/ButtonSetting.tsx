@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
 import {
     Menu,
@@ -9,11 +9,14 @@ import {
     MenuOption,
     MenuTrigger,
    } from "react-native-popup-menu";
-import { FontAwesome } from '@expo/vector-icons';
+
 import { RadioButton } from 'react-native-radio-buttons-group';
 import { Color } from '../../styles/Color';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/stacks/StackNavigation';
+import { useNavigation } from '@react-navigation/native';
 
 
 interface Props {
@@ -39,6 +42,8 @@ const dates = [
     { id: '4', arrival_warehouse: 'Mayo 2023' },
 ]
 
+type PropsNavigation = NativeStackNavigationProp<RootStackParamList>
+
 export const ButtonSetting = ({ types, selectedType, onChange, children }: Props) => {
 
     const [showCategoryOptions, setShowCategoryOptions] = useState(true);
@@ -46,6 +51,8 @@ export const ButtonSetting = ({ types, selectedType, onChange, children }: Props
 
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
+
+    const navigation = useNavigation<PropsNavigation>();
 
     const [fontsLoaded] = useFonts({
         overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf'),
@@ -81,8 +88,15 @@ export const ButtonSetting = ({ types, selectedType, onChange, children }: Props
 
 
     function onPressRadioButton(name: string) {
-            setSelectedCategory(name); 
+        if(name === ''){
+            setSelectedCategory(''); 
+        } else {
+            setSelectedCategory(name);
+        }
+        if(onChange){
             onChange(name);
+            //navigation.navigate('Results', {type: name})
+        }
     }
 
     function selectDateRaddioButton(date: string) {
@@ -99,6 +113,7 @@ export const ButtonSetting = ({ types, selectedType, onChange, children }: Props
         style={styles.container}
         
     >
+        
         <Menu style={styles.button}>
             <MenuTrigger>
                 <FontAwesome name="sliders" size={24} color="white" />
@@ -117,6 +132,7 @@ export const ButtonSetting = ({ types, selectedType, onChange, children }: Props
                         }
                     </TouchableOpacity>
                 </MenuOption>
+               
                 {showCategoryOptions && types?.map((type, i) => (
                 <MenuOption style={styles.option} key={i}>
                     <RadioButton 
@@ -188,6 +204,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     button: {
+        flex: 1,
         width: '100%',
        justifyContent: 'center',
        alignItems: 'center',

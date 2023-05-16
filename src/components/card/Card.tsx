@@ -7,11 +7,12 @@ import { useNavigation } from '@react-navigation/native';
 
 import { RootStackParamList } from '../../navigation/stacks/StackNavigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Product } from '../../screens/home/HomeScreen';
 
 export interface CardProps {
   type: string;
   statusText: string;
-  stockColor?: string;
+  stockColor?: Product[];
   onPress?: () => void;
   image?: string
   item_id: string
@@ -21,7 +22,9 @@ type NavigationProps = NativeStackNavigationProp<RootStackParamList>
 
 
 
-export const Card = ({type, statusText, image, onPress, item_id}: CardProps) => {
+export const Card = ({type, statusText, image, onPress, item_id, stockColor}: CardProps) => {
+  const MAX_COLORS_TO_SHOW = 5;
+
     const [fontsLoaded] = useFonts({
       overpassMedium: require('../../../assets/fonts/Overpass-Medium.ttf'),
       overpassLigth: require('../../../assets/fonts/Overpass-Light.ttf'),
@@ -49,7 +52,8 @@ export const Card = ({type, statusText, image, onPress, item_id}: CardProps) => 
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <View style={{paddingHorizontal: 5, width: 100}}>
+      <View style={{paddingHorizontal: 5, width: '40%'}}>
+      <TouchableOpacity onPress={() => navigation.navigate('Product',  {id: item_id})}>
         <Image 
           source={{
             uri: image,
@@ -62,6 +66,7 @@ export const Card = ({type, statusText, image, onPress, item_id}: CardProps) => 
           resizeMode='contain'
           style={styles.image}
         />
+      </TouchableOpacity>
       </View>
       <View style={styles.content}>
         <TouchableOpacity onPress={() => navigation.navigate('Product',  {id: item_id})}>
@@ -69,14 +74,24 @@ export const Card = ({type, statusText, image, onPress, item_id}: CardProps) => 
           <Text style={styles.paragraph}>Colores</Text>
         </TouchableOpacity>
         <View style={styles.colores}>
-          <View  style={{backgroundColor: 'black', width: 12, height: 12, borderRadius: 50}}/>
-          <View  style={{backgroundColor: 'blue', width: 12, height: 12, borderRadius: 50}}/>
-          <View  style={{backgroundColor: 'red', width: 12, height: 12, borderRadius: 50}}/>
-          <View  style={{backgroundColor: 'yellow', width: 12, height: 12, borderRadius: 50}}/>
+          {
+            stockColor?.slice(0, MAX_COLORS_TO_SHOW)?.map((product, index) => (
+              <View key={index} style={{
+                backgroundColor: product.color, 
+                width: 12, 
+                height: 12, 
+                borderRadius: 50,
+                borderColor: 'gray',
+                borderWidth: 0.5
+              }}/>
+            ))}
+             {stockColor && stockColor.length > MAX_COLORS_TO_SHOW && (
+              <Text style={styles.moreColorsText}>+{stockColor.length - MAX_COLORS_TO_SHOW} más</Text>
+            )}
         </View>
-        <View style={styles.status}>
+      </View>
+      <View style={styles.status}>
           <Text style={styles.statusText}>Entrega estimada: {statusText}</Text>
-        </View>
       </View>
       
     </View>
@@ -102,7 +117,10 @@ const styles = StyleSheet.create({
    
   },
   content: {
-    maxHeight:134
+    width: '60%',
+    height: 90,
+    marginBottom: 10,
+    justifyContent: 'flex-start',
   },
   title:{
     fontSize: 18,
@@ -130,8 +148,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     paddingVertical: 5,
     paddingHorizontal: 5,
-    top: 18,
-    right: -5,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
     width: 190,    
   },
   statusText:{
@@ -140,6 +159,9 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     textAlign: 'center',
     fontFamily: 'overpassLigth',
+  },
+  moreColorsText:{
+    fontSize: 10,
   }
 })
 

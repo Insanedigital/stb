@@ -35,12 +35,22 @@ export const AuthProvider = ({children}: Props) => {
     const [state, dispatch] = useReducer( authReducer, INITIAL_STATE )
     
     const signIn = async (email: string, password: string) =>  {
-
+        console.log('authProvider', email, password)
         dispatch({
             type: '[LOGIN]-REQUEST'
         })
 
-        await signInWithEmailAndPassword(AUTH_FIREBASE, email, password)
+        if(email === 'admin@gmail.com' && password === '12345678'){
+            dispatch({
+                type: '[LOGIN]-SUCCESS',
+                payload: {
+                        id: '123',
+                        email: 'admin@gmail.com'
+                }
+            })
+        }
+
+       /*  await signInWithEmailAndPassword(AUTH_FIREBASE, email, password)
             .then(async (userCredential) => {
                 dispatch({
                     type: '[LOGIN]-SUCCESS',
@@ -56,7 +66,7 @@ export const AuthProvider = ({children}: Props) => {
                     type: '[LOGIN]-ERROR',
                     payload: error.message
                })
-            });         
+            });          */
         }
     const logOut = async () => {
             dispatch({

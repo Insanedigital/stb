@@ -26,9 +26,10 @@ import { FlatList } from 'react-native-gesture-handler'
 import DATA from '../../data/products.json'
 import { FlatlistProducts } from '../../components/flatlistProducts/FlatlistProducts'
 import { Color } from '../../styles/Color'
+import { CardColumn } from '../../components/card/CardColumn'
 
 
-interface Product {
+export interface Product {
   qty_expected: number;
   item_id: number;
   container_id: number;
@@ -51,7 +52,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 
 
-export const HomeScreen = ({navigation}: Props) => {
+export const HomeScreen = () => {
   const insets = useSafeAreaInsets();
   const [buttonIntransit, setButtonIntransit] = useState(false);
   const [buttonPromotion, setButtonPromotion] = useState(false);
@@ -59,11 +60,11 @@ export const HomeScreen = ({navigation}: Props) => {
   const [buttonCustom, setButtonCustom] = useState(false);
   const [buttonDirection, setButtonDirection] = useState(false);
   const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [numColumns, setNumColumns] = useState(1);
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
-  const getProducts = async () => {
+ /*  const getProducts = async () => {
     setLoading(true)
     try {
       const response: any = await stabApi.get('containerToApp')
@@ -83,7 +84,7 @@ export const HomeScreen = ({navigation}: Props) => {
       const results: any = getProducts()
       setProducts(results)
       },
-  [])
+  []) */
     
  
 
@@ -123,7 +124,7 @@ export const HomeScreen = ({navigation}: Props) => {
     setNumColumns(numColumns === 1 ? 2 : 1);
   };
 
-  const groupedProducts: Record<string, Product[]>  = DATA.products.reduce((acc, product) => {
+  const groupedProducts: Record<string, Product[]>= DATA.products.reduce((acc: any, product) => {
     const type = product.type;
       if (!acc[type]) {
         acc[type] = [];
@@ -132,7 +133,7 @@ export const HomeScreen = ({navigation}: Props) => {
       return acc;
   }, {});
 
-  const data = selectedType ? groupedProducts[selectedType] : DATA.products;
+  const productsToRender = selectedType ? groupedProducts[selectedType] : DATA.products;
 
   if(loading){
     return (
@@ -150,10 +151,14 @@ export const HomeScreen = ({navigation}: Props) => {
     
     ]}>
         <StatusBar  style='light'/>
-        <SafeAreaView style={{width:'100%', alignItems: 'center'}}>
-        <Header title='Home'/>
-       {/*  <View style={[styles.section_search, {paddingHorizontal: 10}]}>
-          <ButtonSetting />
+        <ScrollView style={{width:'100%'}}>
+          <Header title='Home'/>
+          <View style={[styles.section_search, {paddingHorizontal: 10}]}>
+          <ButtonSetting 
+           types={Object.keys(groupedProducts)}
+           selectedType={selectedType}
+           onChange={(type) => setSelectedType(type)}
+          />
             <Search size={'67%'}/>
           <ButtonDirection title='Vista' state={buttonDirection} onPress={handleChangeDirectionLayout} />
         </View>
@@ -162,53 +167,56 @@ export const HomeScreen = ({navigation}: Props) => {
           <ButtonFilter title='Promoción' source={require('../../../assets/porcentaje.png')} state={buttonPromotion} onPress={handleButtonPromotion} />
           <ButtonFilter title='Más Vendidos' source={require('../../../assets/destellos.png')} state={buttonBestsellers} onPress={handleButtonBestsellers} />
           <ButtonFilter title='Personalizar' source={require('../../../assets/varita-magica.png')} state={buttonCustom} onPress={handleButtonCustom} />
-        </View> */}
+        </View>
        
-        <View style={{overflow: 'scroll'}}>
-        <FlatList
-            data={data}
-            numColumns={numColumns}
-            renderItem={({ item }) => (
-              <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 7}}>
-                  <Card type={item.type} statusText={item.arrival_warehouse} image={item?.images} item_id={item.item_id.toLocaleString()}/>
-              </View>
-            )}
-            contentContainerStyle={{
-                width: '100%',
-                paddingHorizontal: 10
-            }}
-            ListHeaderComponent={
-                <View style={{marginBottom: 10}}>
-                  <View style={[styles.section_search, {paddingHorizontal: 10}]}>
-                    <ButtonSetting 
-                      types={Object.keys(groupedProducts)}
-                      selectedType={selectedType}
-                      onChange={(type) => setSelectedType(type)}
-                    
-                    />
-                      <Search size={'67%'}/>
-                    <ButtonDirection title='Vista' state={buttonDirection} onPress={handleChangeDirectionLayout} />
-                  </View>
-                  <View style={[styles.section_nav, {paddingHorizontal: 10}]}> 
-                    <ButtonFilter title='En tránsito' source={require('../../../assets/barco.png')} state={buttonIntransit} onPress={handleButtonIntransit} />
-                    <ButtonFilter title='Promoción' source={require('../../../assets/porcentaje.png')} state={buttonPromotion} onPress={handleButtonPromotion} />
-                    <ButtonFilter title='Más Vendidos' source={require('../../../assets/destellos.png')} state={buttonBestsellers} onPress={handleButtonBestsellers} />
-                    <ButtonFilter title='Personalizar' source={require('../../../assets/varita-magica.png')} state={buttonCustom} onPress={handleButtonCustom} />
-                  </View>
-                </View>
-            }
-        />
-          
+        <View style={styles.section_products}>
+
+        {
+          Object.entries(groupedProducts).map(([type, products]) => 
+            selectedType === type ? (
+            buttonDirection ? (
+              <CardColumn 
+                key={`cardColumn-${type}`}
+                type={type} 
+                statusText={products[0]?.arrival_warehouse} 
+                image={products[0]?.images} 
+                item_id={products[0]?.item_id.toLocaleString()}
+                stockColor={products}
+              /> 
+            ) : (
+              <Card 
+                key={`card-${type}`}
+                type={type} 
+                statusText={products[0]?.arrival_warehouse} 
+                image={products[0]?.images} 
+                item_id={products[0]?.item_id.toLocaleString()}
+                stockColor={products}
+              />
+            )
+          ) : buttonDirection ? (
+            <CardColumn 
+              key={`cardColumn-${type}`}
+              type={type} 
+              statusText={products[0]?.arrival_warehouse} 
+              image={products[0]?.images} 
+              item_id={products[0]?.item_id.toLocaleString()}
+              stockColor={products}
+            /> 
+          ) : (
+            <Card 
+              key={`card-${type}`}
+              type={type} 
+              statusText={products[0]?.arrival_warehouse} 
+              image={products[0]?.images} 
+              item_id={products[0]?.item_id.toLocaleString()}
+              stockColor={products}
+            />
+          ))
+        } 
 
         </View>
-        </SafeAreaView>
+        </ScrollView>
     </View>
   )
 }
 
-{/* <FlatlistProducts numColumns={numColumns}/> */}
-{/* <TypeSelector
-                types={Object.keys(groupedProducts)}
-                selectedType={selectedType}
-                onChange={(type) => setSelectedType(type)}
-                /> */}

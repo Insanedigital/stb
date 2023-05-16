@@ -69,11 +69,13 @@ export const TabNavigation = () => {
                     height: 70,
                     paddingTop: 12, 
                     paddingHorizontal: 5,
+                    paddingBottom: 10,
                       
                 },
                 tabBarLabelStyle: {
                     fontSize: 9,
                     fontWeight: '400',
+                    paddingTop: 5,
                     //fontFamily: ' overpassLigth',
                   },
                   

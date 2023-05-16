@@ -46,6 +46,7 @@ export const PageOne = ({setPage}: IProps) => {
     
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
+        
         <View style={styles.wrapper_image}>
             <Image 
                 source={require('../../../../assets/welcome/PageOne.png')}
@@ -62,13 +63,16 @@ export const PageOne = ({setPage}: IProps) => {
                 borderTopLeftRadius: 51,
                 paddingHorizontal: 25,
                 paddingTop: 18,
+                justifyContent: 'center',
+                alignItems: 'flex-end',
             }}
         >
+            <View style={styles.contentTutorial}>
             <Text style={styles.title}>
-                Bienvenido!
+                ¡Bienvenido!
             </Text>
             <Text style={styles.paragraph}>
-                Te damos la bienvenida a la App de STB caps, nos alegra que seas parte de nosotros!
+            Te damos la bienvenida a la App de usuarios exclusivos de STB caps, nos alegra que estes con nosotros.
             </Text>
 
             <View style={styles.actions}>
@@ -94,6 +98,7 @@ export const PageOne = ({setPage}: IProps) => {
             </ButtomGradient>
 
             </View>
+            </View>
         </GradientLayout>
     </View>
   )
@@ -102,7 +107,11 @@ export const PageOne = ({setPage}: IProps) => {
 const styles = StyleSheet.create({
     container: {
         height: '100%',
+        backgroundColor: Color.bgMain,
     },
+    contentTutorial:{
+        paddingHorizontal: 20, 
+     },
     wrapper_image:{
         width: '100%',
         height: '50%',

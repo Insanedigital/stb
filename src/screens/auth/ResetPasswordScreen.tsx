@@ -1,9 +1,8 @@
 
 import { sendPasswordResetEmail, verifyPasswordResetCode  } from 'firebase/auth';
-import { ActivityIndicator, Image, SafeAreaView,  StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Image, SafeAreaView,  StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { GradientLayout } from '../../components/layout/GradientLayou'
 import { Input } from '../../components/Input/Input'
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ButtomGradient } from '../../components/button/ButtomGradient';
 import { Color } from '../../styles/Color';
 import { AntDesign } from '@expo/vector-icons';
@@ -23,11 +22,11 @@ export const ResetPasswordScreen = () => {
           }}
         >
            <TouchableOpacity
-          style={styles.backButton} 
-          onPress={() => navigation.navigate('StarPage')}
-        >
-        <AntDesign name="arrowleft" size={24} color="white" />
-      </TouchableOpacity>
+              style={styles.backButton} 
+              onPress={() => navigation.navigate('Login')}
+            >
+              <AntDesign name="arrowleft" size={24} color="white" />
+            </TouchableOpacity>
             <View style={styles.constainerImage}>
               <Image 
                 source={require('../../../assets/LogoSTB.png')}
@@ -44,14 +43,14 @@ export const ResetPasswordScreen = () => {
             />
             <View style={{width: '100%'}}>
                 <ButtomGradient style={{
-                  width: '40%',
+                  width: '60%',
                   marginVertical: 32,
                   alignSelf:'center',
                   justifyContent: 'center',
                   borderRadius: 25,
                   padding: 10,
                 }}>
-                  <TouchableOpacity style={styles.button} onPress={() => console.log('Hola Mundo')}>
+                  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ForgotPassword')}>
                       <Text style={styles.buttonText}>
                         Enviar
                       </Text>
@@ -66,18 +65,19 @@ export const ResetPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    
+    backgroundColor: Color.dark,
+    justifyContent: 'center',
+    alignItems:'center'
   },
   backButton: {
     position: 'relative',
     paddingTop: 30,
     paddingHorizontal: 30,
-  
+    zIndex: 1,
   },
   constainerImage:{
     width: '100%',
-    height: 250,
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -85,15 +85,16 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
   }, 
   title:{
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '400',
     color: Color.whiteLight,
     marginVertical: 30,
     textAlign: 'center',
+
   },
   containerLabel:{
-    backgroundColor:'#030741', 
-    width:'15%',
+    backgroundColor:'#080b39', 
+    width:'10%',
     position: 'absolute',
     borderRadius: 5,
     bottom: 50,

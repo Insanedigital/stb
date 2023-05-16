@@ -74,11 +74,12 @@ export const PageThree = ({setPage, back}: IProps) => {
                 paddingTop: 18,
             }}
         >
+            <View style={styles.contentTutorial}>
             <Text style={styles.title}>
                 Reserva tus productos
             </Text>
             <Text style={styles.paragraph}>
-                Escoge el contenedor de la cual quieres reservar y dale reservar
+                Escoge el producto que quieres reservar, define el color, la cantidad haz clic en reservar y listo.
             </Text>
 
             <View style={styles.actions}>
@@ -104,6 +105,7 @@ export const PageThree = ({setPage, back}: IProps) => {
             </ButtomGradient>
 
             </View>
+            </View>
         </GradientLayout>
     </View>
   )
@@ -112,7 +114,12 @@ export const PageThree = ({setPage, back}: IProps) => {
 const styles = StyleSheet.create({
     container: {
         height: '100%',
+        backgroundColor: Color.bgMain,
     },
+    contentTutorial:{
+        paddingHorizontal: 20,
+      
+     },
     backButton: {
         position: 'absolute',
         top: 50,
@@ -138,7 +145,7 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     paragraph: {
-        fontSize: 14,
+        fontSize: 18,
         textAlign: 'center',
         color: Color.blueLight,
         fontFamily: 'overpassRegular',
